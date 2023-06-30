@@ -1,0 +1,24 @@
+<!DOCTYPE html
+<html>
+<head>
+    <title> KODO</title>
+</head>
+<body>
+    <h1>Kodo List</h1>
+    <form method="post">
+        {% csrf_token %}
+        <ul>
+            {% for task in tasks %}
+            <li>
+                <input type="checkbox" id="task_{{ task.id }}" name="task_{{ task.id }}" {% if task.completed %}checked{% endif %}>
+                <label for="task_{{ task.id }}">{{ task.title }}</label>
+
+            </li>
+            {% endfor %}
+        </ul>
+        <button type = "submit">Save</button>
+    </form>
+    <a href="{% url 'task_create' %}">Create new Task</a>
+</body>
+</html>
+       

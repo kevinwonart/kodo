@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create New Task</title>
+</head>
+<body>
+    <h1>Create new task</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="title">Task:</label>
+        <input type="text" id ="title" name = "title" required>
+        <button type="submit">Create</button>
+    </form>
+    <a href="{% url 'task_list' %}">Back to Task List</a>
+</body>
+</html>
