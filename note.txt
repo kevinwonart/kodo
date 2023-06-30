@@ -1,0 +1,1 @@
+The script sqlformat django-admin is installed in '/home/kw/.local/bin' consider adding to path
