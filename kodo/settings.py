@@ -31,7 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
         'kodo.herokuapp.com'
-        'kodo-cf753a500e9a.herokuapp.com/'
+        'kodo-cf753a500e9a.herokuapp.com'
         ]
 
 
