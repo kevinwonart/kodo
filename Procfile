@@ -1,2 +1,2 @@
-release: python mange.py miggrate
+release: python manage.py miggrate
 web: gunicorn kodo.wsgi
