@@ -30,7 +30,6 @@ SECRET_KEY = 'django-insecure-%ml$8nlg3+b+2!!h4ponn5g4-hdzoid!+wcb(^*95572kt5+i(
 DEBUG = True
 
 ALLOWED_HOSTS = [
-        'kodo.herokuapp.com'
         'kodo-cf753a500e9a.herokuapp.com'
         ]
 
