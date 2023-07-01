@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from whitenoise import WhiteNoise
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
