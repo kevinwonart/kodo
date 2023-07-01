@@ -1,1 +1,2 @@
 web: gunicorn kodo.wsgi
+web: gunicorn kodo:app
