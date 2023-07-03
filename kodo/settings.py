@@ -31,7 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
         ##'http://localhost:8000/'
-        ##'kodo-cf753a500e9a.herokuapp.com'
+        'kodo-cf753a500e9a.herokuapp.com'
         ]
 
 
