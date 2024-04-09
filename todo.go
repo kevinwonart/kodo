@@ -4,7 +4,7 @@ import (
   "encoding/json"
   "errors"
   "fmt"
-  "io/ioutil"
+  //"io"
   "os"
   "time"
 )
@@ -14,7 +14,7 @@ type item struct {
   Task string
   Done bool
   CreatedAt time.Time
-  Completed time.Time
+  CompletedAt time.Time
 }
 
 type Todos []item
@@ -25,7 +25,7 @@ func (t *Todos) Add(task string) {
     Task: task,
     Done: false,
     CreatedAt: time.Now(),
-    completedAt: time.Time{},
+    CompletedAt: time.Time{},
   }
 
   *t = append(*t, todo)
@@ -34,11 +34,11 @@ func (t *Todos) Add(task string) {
 func (t *Todos) Complete(index int) error {
   ls := *t
   if index <= 0 || index > len(ls) {
-    return errors.New(text: "invalid index")
+    return errors.New("invalid index")
   }
 
   ls[index-1].CompletedAt = time.Now()
-  ls[index-1.Done = true
+  ls[index-1].Done = true
 
   return nil
 }
@@ -46,7 +46,7 @@ func (t *Todos) Complete(index int) error {
 func (t *Todos) Delete(index int) error {
   ls := *t
   if index <= 0 || index > len(ls) {
-    return errors.New(text:"invalid index")
+    return errors.New("invalid index")
   }
 
   *t = append(ls[:index-1], ls[index:]...)
@@ -55,8 +55,8 @@ func (t *Todos) Delete(index int) error {
 }
 
 func (t *Todos) Load(filename string) error {
-  file, err := ioutil.ReadFile(filename)
-  if err ~= nil {
+  file, err := os.ReadFile(filename)
+  if err != nil {
     if errors.Is(err, os.ErrNotExist) {
       return nil
     }
@@ -66,7 +66,7 @@ func (t *Todos) Load(filename string) error {
   if len(file) == 0 {
     return err
   }
-  err = json.Unmarshall(file, t)
+  err = json.Unmarshal(file, t)
   if err != nil {
     return err
   }
@@ -75,9 +75,16 @@ func (t *Todos) Load(filename string) error {
 }
 
 func (t *Todos) Store(filename string) error {
-  data,err := json.Marshall(t)
+  data,err := json.Marshal(t)
   if err != nil {
     return err
   }
-  return ioutil.WriteFile(filename, data, perm:0644)
+  return os.WriteFile(filename, data, 0644)
+}
+
+func (t *Todos) Print() {
+  for i, item := range *t {
+    i++
+    fmt.Printf("%d - %s\n", i, item.Task)
+  }
 }

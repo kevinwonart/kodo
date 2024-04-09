@@ -1,3 +1,3 @@
-module github.com/kevinwonart/todo
+module github.com/kevinwonart/kodo
 
 go 1.22.1
