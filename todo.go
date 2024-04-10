@@ -5,13 +5,13 @@ import (
   "errors"
   "fmt"
   //"io"
-  "github.com/alexeyco/simpletable"
+  "github.com/charmbracelet/lipgloss"
+  "github.com/charmbracelet/lipgloss/table"
   "os"
   "time"
 )
 
 type item struct {
-
   Task string
   Done bool
   CreatedAt time.Time
@@ -85,47 +85,30 @@ func (t *Todos) Store(filename string) error {
 
 func (t *Todos) Print() {
 
-  table := simpletable.New()
+  teaTable := table.New().
+      Border(lipgloss.DoubleBorder()).
+      Headers("#", "Task", "isDone", "CreatedAt", "CompleteAt").
+      Rows()
 
-  table.Header = &simpletable.Header{
-    Cells: []*simpletable.Cell{
-      {Align: simpletable.AlignCenter, Text: "#"},
-      {Align: simpletable.AlignCenter, Text: "Task"},
-      {Align: simpletable.AlignCenter, Text: "Done?"},
-      {Align: simpletable.AlignCenter, Text: "CreatedAt"},
-      {Align: simpletable.AlignCenter, Text: "CompleteAt"},
-    },
-  }
-
-  var cells [][]*simpletable.Cell
 
   for idx, item := range *t {
     idx++
-    task := blue(item.Task)
-    done := blue("no")
+    task := lipgloss.NewStyle().Foreground(lipgloss.Color("4")).Render(item.Task)
+    done := lipgloss.NewStyle().Foreground(lipgloss.Color("4")).Render("no")
     if item.Done {
-      task = green(fmt.Sprintf("\u2705 %s", item.Task))
-      done = green("yes")
+      task = lipgloss.NewStyle().Foreground(lipgloss.Color("2")).Render(fmt.Sprintf("\u2705 %s", item.Task))
+      done = lipgloss.NewStyle().Foreground(lipgloss.Color("2")).Render("yes")
     }
-    cells = append(cells, *&[]*simpletable.Cell{
-      {Text: fmt.Sprintf("%d", idx)},
-      {Text: task},
-      {Text: done},
-      {Text: item.CreatedAt.Format(time.RFC822)},
-      {Text: item.CompletedAt.Format(time.RFC822)},
-    })
-  }
+      teaTable.Row(
+              fmt.Sprintf("%d", idx),
+              task,
+              done,
+              item.CreatedAt.Format(time.RFC822),
+              item.CompletedAt.Format(time.RFC822),
+          )
+      }    
 
-  table.Body = &simpletable.Body{Cells: cells}
-
-  table.Footer = &simpletable.Footer{Cells: []*simpletable.Cell{
-    {Align: simpletable.AlignCenter, Span: 5, Text: red(fmt.Sprintf("You have %d pending todos", t.CountPending()))},
-  }}
-
-
-  table.SetStyle(simpletable.StyleUnicode)
-
-  table.Println()
+    fmt.Println(teaTable)      
 }
 
 func (t *Todos) CountPending() int {
